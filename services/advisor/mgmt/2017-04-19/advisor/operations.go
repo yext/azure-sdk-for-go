@@ -18,148 +18,148 @@ package advisor
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 import (
-    "github.com/Azure/go-autorest/autorest"
-    "github.com/Azure/go-autorest/autorest/azure"
-    "net/http"
+	"github.com/Azure/go-autorest/autorest"
+	"github.com/Azure/go-autorest/autorest/azure"
+	"net/http"
 )
 
 // OperationsClient is the REST APIs for Azure Advisor
 type OperationsClient struct {
-    ManagementClient
+	ManagementClient
 }
+
 // NewOperationsClient creates an instance of the OperationsClient client.
 func NewOperationsClient(subscriptionID string) OperationsClient {
-        return NewOperationsClientWithBaseURI(DefaultBaseURI, subscriptionID)
-        }
+	return NewOperationsClientWithBaseURI(DefaultBaseURI, subscriptionID)
+}
 
 // NewOperationsClientWithBaseURI creates an instance of the OperationsClient client.
-    func NewOperationsClientWithBaseURI(baseURI string, subscriptionID string) OperationsClient {
-        return OperationsClient{ NewWithBaseURI(baseURI, subscriptionID)}
-    }
+func NewOperationsClientWithBaseURI(baseURI string, subscriptionID string) OperationsClient {
+	return OperationsClient{NewWithBaseURI(baseURI, subscriptionID)}
+}
 
 // List lists all the available Advisor REST API operations.
 func (client OperationsClient) List() (result OperationEntityListResult, err error) {
-    req, err := client.ListPreparer()
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", nil , "Failure preparing request")
-        return
-    }
+	req, err := client.ListPreparer()
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", nil, "Failure preparing request")
+		return
+	}
 
-    resp, err := client.ListSender(req)
-    if err != nil {
-        result.Response = autorest.Response{Response: resp}
-        err = autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", resp, "Failure sending request")
-        return
-    }
+	resp, err := client.ListSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		err = autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", resp, "Failure sending request")
+		return
+	}
 
-    result, err = client.ListResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", resp, "Failure responding to request")
-    }
+	result, err = client.ListResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", resp, "Failure responding to request")
+	}
 
-    return
+	return
 }
 
 // ListPreparer prepares the List request.
 func (client OperationsClient) ListPreparer() (*http.Request, error) {
-        const APIVersion = "2017-04-19"
-    queryParameters := map[string]interface{} {
-    "api-version": APIVersion,
-    }
+	const APIVersion = "2017-04-19"
+	queryParameters := map[string]interface{}{
+		"api-version": APIVersion,
+	}
 
-    preparer := autorest.CreatePreparer(
-                        autorest.AsGet(),
-                        autorest.WithBaseURL(client.BaseURI),
-                        autorest.WithPath("/providers/Microsoft.Advisor/operations"),
-                        autorest.WithQueryParameters(queryParameters))
-    return preparer.Prepare(&http.Request{})
+	preparer := autorest.CreatePreparer(
+		autorest.AsGet(),
+		autorest.WithBaseURL(client.BaseURI),
+		autorest.WithPath("/providers/Microsoft.Advisor/operations"),
+		autorest.WithQueryParameters(queryParameters))
+	return preparer.Prepare(&http.Request{})
 }
 
 // ListSender sends the List request. The method will close the
 // http.Response Body if it receives an error.
 func (client OperationsClient) ListSender(req *http.Request) (*http.Response, error) {
-    return autorest.SendWithSender(client, req)
+	return autorest.SendWithSender(client, req)
 }
 
 // ListResponder handles the response to the List request. The method always
 // closes the http.Response Body.
 func (client OperationsClient) ListResponder(resp *http.Response) (result OperationEntityListResult, err error) {
-    err = autorest.Respond(
-            resp,
-            client.ByInspecting(),
-            azure.WithErrorUnlessStatusCode(http.StatusOK),
-            autorest.ByUnmarshallingJSON(&result),
-            autorest.ByClosing())
-    result.Response = autorest.Response{Response: resp}
-    return
+	err = autorest.Respond(
+		resp,
+		client.ByInspecting(),
+		azure.WithErrorUnlessStatusCode(http.StatusOK),
+		autorest.ByUnmarshallingJSON(&result),
+		autorest.ByClosing())
+	result.Response = autorest.Response{Response: resp}
+	return
 }
 
 // ListNextResults retrieves the next set of results, if any.
 func (client OperationsClient) ListNextResults(lastResults OperationEntityListResult) (result OperationEntityListResult, err error) {
-    req, err := lastResults.OperationEntityListResultPreparer()
-    if err != nil {
-        return result, autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", nil , "Failure preparing next results request")
-    }
-    if req == nil {
-        return
-    }
+	req, err := lastResults.OperationEntityListResultPreparer()
+	if err != nil {
+		return result, autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", nil, "Failure preparing next results request")
+	}
+	if req == nil {
+		return
+	}
 
-    resp, err := client.ListSender(req)
-    if err != nil {
-        result.Response = autorest.Response{Response: resp}
-        return result, autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", resp, "Failure sending next results request")
-    }
+	resp, err := client.ListSender(req)
+	if err != nil {
+		result.Response = autorest.Response{Response: resp}
+		return result, autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", resp, "Failure sending next results request")
+	}
 
-    result, err = client.ListResponder(resp)
-    if err != nil {
-        err = autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", resp, "Failure responding to next results request")
-    }
+	result, err = client.ListResponder(resp)
+	if err != nil {
+		err = autorest.NewErrorWithError(err, "advisor.OperationsClient", "List", resp, "Failure responding to next results request")
+	}
 
-    return
+	return
 }
 
 // ListComplete gets all elements from the list without paging.
-func (client OperationsClient) ListComplete (cancel <-chan struct{}) (<-chan OperationEntity, <-chan error) {
-    resultChan := make(chan OperationEntity)
-    errChan := make(chan error, 1)
-    go func() {
-        defer func() {
+func (client OperationsClient) ListComplete(cancel <-chan struct{}) (<-chan OperationEntity, <-chan error) {
+	resultChan := make(chan OperationEntity)
+	errChan := make(chan error, 1)
+	go func() {
+		defer func() {
 			close(resultChan)
 			close(errChan)
 		}()
-        list, err := client.List()
-        if err != nil {
-            errChan <- err
-            return
-        }
-        if list.Value != nil {
-            for _, item := range *list.Value {
-                select {
-                case <- cancel:
-                    return
-                case resultChan <- item:
-                     // Intentionally left blank
-                }
-            }
-        }
-         for list.NextLink != nil {
-                    list, err = client.ListNextResults(list)
-                    if err != nil {
-                        errChan <- err
-                        return
-                    }
-                    if list.Value != nil {
-                        for _, item := range *list.Value {
-                            select {
-                            case <- cancel:
-                                return
-                            case resultChan <- item:
-                                 // Intentionally left blank
-                            }
-                        }
-                    }
-                }
-    }()
-    return resultChan, errChan
+		list, err := client.List()
+		if err != nil {
+			errChan <- err
+			return
+		}
+		if list.Value != nil {
+			for _, item := range *list.Value {
+				select {
+				case <-cancel:
+					return
+				case resultChan <- item:
+					// Intentionally left blank
+				}
+			}
+		}
+		for list.NextLink != nil {
+			list, err = client.ListNextResults(list)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			if list.Value != nil {
+				for _, item := range *list.Value {
+					select {
+					case <-cancel:
+						return
+					case resultChan <- item:
+						// Intentionally left blank
+					}
+				}
+			}
+		}
+	}()
+	return resultChan, errChan
 }
-
