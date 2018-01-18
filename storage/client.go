@@ -28,6 +28,7 @@ import (
 	"mime"
 	"mime/multipart"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 	"regexp"
 	"runtime"
@@ -737,6 +738,15 @@ func (c Client) exec(verb, url string, headers map[string]string, body io.Reader
 	}
 
 	resp, err := c.Sender.Send(&c, req)
+	if err != nil || resp.StatusCode >= 400 {
+		dump, dumpErr := httputil.DumpRequestOut(req, false)
+		if dumpErr != nil {
+			fmt.Printf("error %v dumping request %v\n", dumpErr, req)
+		} else {
+			fmt.Printf("request dump %q\n", dump)
+		}
+	}
+
 	if err != nil {
 		return nil, err
 	}

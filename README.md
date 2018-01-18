@@ -4,6 +4,8 @@
 [![Build Status](https://travis-ci.org/Azure/azure-sdk-for-go.svg?branch=master)](https://travis-ci.org/Azure/azure-sdk-for-go) 
 [![Go Report Card](https://goreportcard.com/badge/github.com/Azure/azure-sdk-for-go)](https://goreportcard.com/report/github.com/Azure/azure-sdk-for-go)
 
+ONLY USE FOR DEBUGGING ON TEST ACCOUNTS
+
 azure-sdk-for-go provides Go packages for using Azure services. It has been
 tested with Go 1.8 and 1.9. To be notified about updates and changes, subscribe
 to the [Azure update feed][].
